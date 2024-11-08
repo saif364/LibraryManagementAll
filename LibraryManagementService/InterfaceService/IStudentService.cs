@@ -10,7 +10,7 @@ namespace LibraryManagementService.InterfaceService
 {
     public interface IStudentService:IBaseService<Student>
     {
-        Task AddAsyncWithAT(StudentVM student);
+        Task<string> AddAsyncWithAT(StudentVM student);
         Task UpdateAsyncWithAT(StudentVM student, EnumStatus status = EnumStatus.Updated);
 
         Task<StudentVM> GetByIdAsyncAT(int id);

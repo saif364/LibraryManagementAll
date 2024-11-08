@@ -8,6 +8,14 @@
 <h4>Book</h4>
 <hr />
 <div class="row">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <p style="color: red;">
+            @string.Join(" ", ViewData.ModelState.Values
+                     .SelectMany(v => v.Errors)
+                     .Select(e => e.ErrorMessage))
+        </p>
+    }
     <div class="col-md-4">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
 

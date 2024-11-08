@@ -44,6 +44,10 @@ namespace BookManagement.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
                  
                 await _BookService.AddAsync(Book); //db related
                 return JsonSuccess("Data Saved successfully", "Index");

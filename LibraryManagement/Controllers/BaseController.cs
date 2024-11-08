@@ -36,7 +36,7 @@ namespace LibraryManagement.Controllers
             var controllerName = ControllerContext?.RouteData?.Values["controller"]?.ToString();
             return Json(new
             {
-                success = true,
+                success = false,
                 status = (int)HttpStatusCodeEnum.BadRequest,
                 message = messages,
                 redirectUrl = Url.Action(GetControllerMethodName(), controllerName) 

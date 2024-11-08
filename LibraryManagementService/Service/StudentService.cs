@@ -54,8 +54,9 @@ namespace LibraryManagementService.Service
 
             await auditRepository.AddAsyncWithTransaction(auditEntity);
         }
-        public async Task AddAsyncWithAT(StudentVM studentVM)
+        public async Task<string> AddAsyncWithAT(StudentVM studentVM)
         {
+            var errorMessage=string.Empty;
             await BeginTransactionAsync();
             try
             {
@@ -67,6 +68,7 @@ namespace LibraryManagementService.Service
 
                 await SaveChangesAsyncWithTransaction();
                 await CommitTransactionAsync();
+                return errorMessage;
             }
             catch (Exception)
             {

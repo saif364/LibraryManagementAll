@@ -11,6 +11,7 @@ namespace LibraryManagementModels.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string? BookTitle { get; set; }
         public string? BookDescription { get; set; }
         public string? BookType { get; set; }

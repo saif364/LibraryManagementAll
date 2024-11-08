@@ -30,22 +30,27 @@
         var methodType = $form.attr('method');
         var data = $form.serialize();
 
-        $.ajax({
-            url: url,
-            type: methodType,
-            data: data,
-            success: function (response) {
-                if (response.success) {
-                    var redirectUrl = response.redirectUrl + "?message=" + encodeURIComponent(response.message);
-                    window.location.href = redirectUrl;
-                } else {
-                    toastr.warning(response.message);
+        var check = $(this).valid();
+        if (check) {
+            $(".validation-summary").text("");
+            $.ajax({
+                url: url,
+                type: methodType,
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        var redirectUrl = response.redirectUrl + "?message=" + encodeURIComponent(response.message);
+                        window.location.href = redirectUrl;
+                    } else {
+                        toastr.warning(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('An unexpected error occurred: ' + error);
                 }
-            },
-            error: function (xhr, status, error) {
-                toastr.error('An unexpected error occurred: ' + error);
-            }
-        });
+            });
+
+        }
     });
 
     $('.GlobalAjax').on('click', function (event) {

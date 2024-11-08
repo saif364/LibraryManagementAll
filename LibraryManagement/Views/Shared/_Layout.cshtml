@@ -20,8 +20,8 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.Identity.IsAuthenticated)
-                        {
+                        @* @if (User.Identity.IsAuthenticated)
+                        { *@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 
@@ -54,12 +54,12 @@
                                     <button type="submit" class="btn btn-link nav-link">Logout</button>
                                 </form>
                             </li>
-                        }
+                        @* }
                         else
                         {
                             <li><a class="nav-link" asp-controller="Account" asp-action="Login">Login</a></li>
                             <li><a class="nav-link" asp-controller="Account" asp-action="Register">Register</a></li>
-                        }
+                        } *@
 
                        
                     </ul>
@@ -100,6 +100,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/library/toastr/toastr.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

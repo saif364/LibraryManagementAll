@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace LibraryManagement.Controllers
 {
-    [Authorize]
+
     public class StudentController : BaseController
     {
         private readonly IStudentService _studentService;
         private readonly IRepository<StudentAuditTrial> _auditTrialBaseRepository;
         private readonly ILogger<StudentController> _logger;
         private readonly IMapper _mapper;
-        public StudentController(ILogger<StudentController> logger , IStudentService studentService, IMapper mapper, IRepository<StudentAuditTrial> auditTrialBaseRepository)
+        public StudentController(ILogger<StudentController> logger, IStudentService studentService, IMapper mapper, IRepository<StudentAuditTrial> auditTrialBaseRepository)
         {
             _studentService = studentService;
             _logger = logger;
@@ -24,7 +24,7 @@ namespace LibraryManagement.Controllers
         }
         public async Task<IActionResult> Index()
         {
-           // _logger.LogError("This is an error log message");
+            // _logger.LogError("This is an error log message");
             var list = await _studentService.GetAllAsync();
             return View(list.ToList());
         }
@@ -37,15 +37,23 @@ namespace LibraryManagement.Controllers
         {
             try
             {
-                await _studentService.AddAsyncWithAT(student); 
+                if (!ModelState.IsValid)
+                {
+                    return JsonBadRequest("Validation Error");
+                }
+                var error = await _studentService.AddAsyncWithAT(student);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    return JsonBadRequest(error);
+                }
                 return JsonSuccess("Data Saved successfully", "Index");
             }
             catch (Exception ex)
             {
-                return JsonInternalServerError(ex.InnerException.Message ?? ex.Message);
+                return JsonInternalServerError("InternalServerError: "+ex.InnerException.Message ?? ex.Message);
             }
         }
-        public async Task<IActionResult> StatusChange(EnumStatus status,int id)
+        public async Task<IActionResult> StatusChange(EnumStatus status, int id)
         {
             try
             {
@@ -72,7 +80,7 @@ namespace LibraryManagement.Controllers
             }
             catch (Exception ex)
             {
-                return JsonInternalServerError(ex.Message?? ex.InnerException.Message);
+                return JsonInternalServerError(ex.Message ?? ex.InnerException.Message);
             }
         }
         public async Task<IActionResult> Delete(int id)
@@ -106,6 +114,6 @@ namespace LibraryManagement.Controllers
 
             return File(fileStream, contentType, fileName);
         }
-         
+
     }
 }
