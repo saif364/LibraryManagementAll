@@ -43,18 +43,30 @@ namespace BookManagement.Controllers
         public async Task<IActionResult> Create(Book Book)
         {
             try
-            {
-                if (!ModelState.IsValid)
+            { 
+                if (Book?.BookTitle?.Length <5)
                 {
-                    return BadRequest();
-                }
-                 
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Need more than 5 charecter.",
+                    });
+                } 
                 await _BookService.AddAsync(Book); //db related
-                return JsonSuccess("Data Saved successfully", "Index");
+                return Json(new
+                {
+                    success = true,
+                    message = "Saved",
+                    redirectUrl = Url.Action("Index","Book")
+                });
             }
             catch (Exception ex)
             {
-                return JsonInternalServerError(ex.InnerException.Message ?? ex.Message);
+                return Json(new
+                {
+                    success = false,
+                    message = ex.InnerException?.Message ?? ex.Message,
+                });
             }
 
         }

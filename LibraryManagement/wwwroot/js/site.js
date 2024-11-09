@@ -21,37 +21,37 @@
     }
 
     // Handle form submission
-    $('form').on('submit', function (event) {
-        debugger;
-        event.preventDefault();
+    //$('form').on('submit', function (event) {
+    //    debugger;
+    //    event.preventDefault();
 
-        var $form = $(this);
-        var url = $form.attr('action');
-        var methodType = $form.attr('method');
-        var data = $form.serialize();
+    //    var $form = $(this);
+    //    var url = $form.attr('action');
+    //    var methodType = $form.attr('method');
+    //    var data = $form.serialize();
 
-        var check = $(this).valid();
-        if (check) {
-            $(".validation-summary").text("");
-            $.ajax({
-                url: url,
-                type: methodType,
-                data: data,
-                success: function (response) {
-                    if (response.success) {
-                        var redirectUrl = response.redirectUrl + "?message=" + encodeURIComponent(response.message);
-                        window.location.href = redirectUrl;
-                    } else {
-                        toastr.warning(response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    toastr.error('An unexpected error occurred: ' + error);
-                }
-            });
+    //    var check = $(this).valid();
+    //    if (check) {
+    //        $(".validation-summary").text("");
+    //        $.ajax({
+    //            url: url,
+    //            type: methodType,
+    //            data: data,
+    //            success: function (response) {
+    //                if (response.success) {
+    //                    var redirectUrl = response.redirectUrl + "?message=" + encodeURIComponent(response.message);
+    //                    window.location.href = redirectUrl;
+    //                } else {
+    //                    toastr.warning(response.message);
+    //                }
+    //            },
+    //            error: function (xhr, status, error) {
+    //                toastr.error('An unexpected error occurred: ' + error);
+    //            }
+    //        });
 
-        }
-    });
+    //    }
+    //});
 
     $('.GlobalAjax').on('click', function (event) {
         debugger;
@@ -113,6 +113,41 @@
 
 
     //#endregion
+
+
+
+
+    // Handle form submission
+    $('form').on('submit', function (event) {
+        debugger;
+        event.preventDefault();
+
+        var $form = $(this);
+        var url = $form.attr('action');
+        var methodType = $form.attr('method');
+        var data = $form.serialize();
+
+        var check = $(this).valid();
+        if (check) {
+            $(".validation-summary").text("");
+            $.ajax({
+                url: url,
+                type: methodType,
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('An unexpected error occurred: ' + error);
+                }
+            });
+
+        }
+    });
 });
 
 
